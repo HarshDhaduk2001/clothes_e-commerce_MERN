@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import AliceCarousel from "react-alice-carousel";
-import HomeSectionCard from "../HomeSectionCard/HomeSectionCard";
+import HomeSectionCard from "./HomeSectionCard";
 import Button from "@mui/material/Button";
 import NavigateBeforeIcon from "@mui/icons-material/NavigateBefore";
 

@@ -1,14 +1,16 @@
+import { Route, Routes } from "react-router-dom";
 import "./App.css";
 import Footer from "./customer/components/Footer/Footer";
 import Navigation from "./customer/components/Navigation/Navigation";
-import Product from "./customer/components/Product/Product";
-// import { HomePage } from "./customer/pages/HomePage/HomePage";
+import CustomerRoute from "./customer/routes/CustomerRoute";
 
 function App() {
   return (
     <>
       <Navigation />
-      <Product />
+      <Routes>
+        <Route path="/*" element={<CustomerRoute />} />
+      </Routes>
       <Footer />
     </>
   );

@@ -1,11 +1,11 @@
 import React from "react";
-import MainCarousel from "../../components/HomeCarousel/MainCarousel";
-import HomeSectionCarousel from "../../components/HomeSectionCarousel/HomeSectionCarousel";
+import MainCarousel from "../../components/Home/MainCarousel";
+import HomeSectionCarousel from "../../components/Home/HomeSectionCarousel";
 import mens_kurta from "../../Data/Men/men_kurta";
 import mens_shirt from "../../Data/Men/men_shirt.json";
 import women_dress from "../../Data/Women/women_dress.json";
 
-export const HomePage = () => {
+const HomePage = () => {
   return (
     <>
       <MainCarousel />
@@ -18,3 +18,5 @@ export const HomePage = () => {
     </>
   );
 };
+
+export default HomePage;
