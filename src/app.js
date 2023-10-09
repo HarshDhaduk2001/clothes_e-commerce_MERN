@@ -8,6 +8,12 @@ app.use(express.json());
 app.use(cors());
 dotenv.config();
 
+const authRouters = require("./routes/authRouter");
+const userRouters = require("./routes/userRouter");
+
+app.use("/auth", authRouters);
+app.use("/users", userRouters)
+
 // MongoDB connection
 mongoose
   .connect(process.env.MONGODB_URL, { useNewUrlParser: true })

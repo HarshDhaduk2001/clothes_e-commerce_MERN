@@ -1,5 +1,5 @@
-const User = required("../models/userModel");
-const bcrypt = required("bcrypt");
+const User = require("../models/userModel");
+const bcrypt = require("bcrypt");
 const jwtProvider = require("../config/jwtProvider");
 
 const createUser = async (userData) => {
@@ -18,7 +18,7 @@ const createUser = async (userData) => {
   }
 };
 
-const findUserById = async (userId) => {
+const getUserById = async (userId) => {
   try {
     const user = await User.findById(userId).populate("address");
     if (!user) {
@@ -30,7 +30,7 @@ const findUserById = async (userId) => {
   }
 };
 
-const findUserByEmail = async (email) => {
+const getUserByEmail = async (email) => {
   try {
     const user = await User.findOne({ email });
     if (!user) {
@@ -66,8 +66,8 @@ const getAllUsers = async () => {
 
 module.exports = {
   createUser,
-  findUserById,
-  findUserByEmail,
+  getUserById,
+  getUserByEmail,
   getUserProfileByToken,
   getAllUsers,
 };
