@@ -11,7 +11,6 @@ const createUser = async (userData) => {
     }
     password = await bcrypt.hash(password, 10);
     const user = await User.create({ firstName, lastName, email, password });
-    console.log(user);
     return user;
   } catch (error) {
     throw new Error(error.message);
