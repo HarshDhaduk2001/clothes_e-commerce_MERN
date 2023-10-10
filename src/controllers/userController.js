@@ -3,7 +3,7 @@ const jwtProvider = require("../config/jwtProvider");
 
 const getUserProfile = async (req, res) => {
   try {
-    const jwt = req.headers.authorization?.spit(" ")[1];
+    const jwt = req.headers.authorization?.split(" ")[1];
     if (!jwt) {
       return res.status(404).send({ error: "Token not found." });
     }

@@ -12,7 +12,7 @@ const authRouters = require("./routes/authRouter");
 const userRouters = require("./routes/userRouter");
 
 app.use("/auth", authRouters);
-app.use("/users", userRouters)
+app.use("/api/users", userRouters);
 
 // MongoDB connection
 mongoose
