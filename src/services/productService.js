@@ -67,7 +67,7 @@ const deleteProduct = async (productId) => {
   }
 };
 
-const updateProduct = async (productId) => {
+const updateProduct = async (productId, reqData) => {
   try {
     const product = await findProductById(productId);
     if (product) {

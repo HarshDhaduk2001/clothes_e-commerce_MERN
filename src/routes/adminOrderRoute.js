@@ -1,7 +1,7 @@
 const express = require("express");
 const router = express.Router();
 const adminController = require("../controllers/adminOrderController");
-const authenticate = require("../middleware/authenticate");
+const { authenticate } = require("../middleware/authenticate");
 
 router.get("/", authenticate, adminController.getAllOrders);
 router.put("/:orderId/confirmed", authenticate, adminController.confirmOrders);

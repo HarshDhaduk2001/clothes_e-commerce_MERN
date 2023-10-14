@@ -1,8 +1,14 @@
 const cartService = require("../services/cartService");
+const userService = require("../services/userService");
 
 const findUserCart = async (req, res) => {
-  const user = req.user;
   try {
+    const jwt = req.headers.authorization?.split(" ")[1];
+    if (!jwt) {
+      return res.status(404).send({ error: "Token not found." });
+    }
+
+    const user = await userService.getUserProfileByToken(jwt);
     const cart = await cartService.findUserCart(user._id);
     return res
       .status(200)
@@ -13,8 +19,13 @@ const findUserCart = async (req, res) => {
 };
 
 const addItemToCart = async (req, res) => {
-  const user = req.user;
   try {
+    const jwt = req.headers.authorization?.split(" ")[1];
+    if (!jwt) {
+      return res.status(404).send({ error: "Token not found." });
+    }
+
+    const user = await userService.getUserProfileByToken(jwt);
     const cartItem = await cartService.addItemToCart(user._id, req.body);
     return res
       .status(200)

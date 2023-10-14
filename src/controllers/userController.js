@@ -1,5 +1,4 @@
 const userService = require("../services/userService");
-const jwtProvider = require("../config/jwtProvider");
 
 const getUserProfile = async (req, res) => {
   try {
