@@ -1,45 +1,48 @@
-const Category = require("../models/cartModel");
+const Category = require("../models/categoryModel");
 const Product = require("../models/productModel");
 
 const createProduct = async (reqData) => {
   try {
-    let topLevel = await Category.findOne({ name: reqData.topLevelCategory });
+    let topLevel = await Category.findOne({ name: reqData.topLavelCategory });
     if (!topLevel) {
       topLevel = new Category({
-        name: reqData.topLevelCategory,
+        name: reqData.topLavelCategory,
         level: 1,
       });
+      topLevel.save();
     }
 
     let secondLevel = await Category.findOne({
-      name: reqData.secondLevelCategory,
+      name: reqData.secondLavelCategory,
       parentCategory: topLevel._id,
     });
     if (!secondLevel) {
       secondLevel = new Category({
-        name: reqData.secondLevelCategory,
+        name: reqData.secondLavelCategory,
         parentCategory: topLevel._id,
         level: 2,
       });
+      secondLevel.save();
     }
 
     let thirdLevel = await Category.findOne({
-      name: reqData.thirdLevelCategory,
+      name: reqData.thirdLavelCategory,
       parentCategory: secondLevel._id,
     });
     if (!thirdLevel) {
       thirdLevel = new Category({
-        name: reqData.thirdLevelCategory,
+        name: reqData.thirdLavelCategory,
         parentCategory: secondLevel._id,
         level: 3,
       });
+      thirdLevel.save();
     }
 
     const product = new Product({
       title: reqData.title,
       color: reqData.color,
       description: reqData.description,
-      dicountedPrice: reqData.discountedPrice,
+      discountedPrice: reqData.discountedPrice,
       discountPresent: reqData.discountPresent,
       imageUrl: reqData.imageUrl,
       brand: reqData.brand,
@@ -59,7 +62,7 @@ const deleteProduct = async (productId) => {
     const product = await findProductById(productId);
     if (product) {
       await Product.findByIdAndDelete(product._id);
-      return "Product deleted successfully.";
+      return;
     }
     return "Product not found.";
   } catch (error) {
@@ -72,7 +75,7 @@ const updateProduct = async (productId, reqData) => {
     const product = await findProductById(productId);
     if (product) {
       await Product.findByIdAndUpdate(product._id, reqData);
-      return "Product deleted successfully.";
+      return;
     }
     return "Product not found.";
   } catch (error) {
