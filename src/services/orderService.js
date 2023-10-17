@@ -14,7 +14,7 @@ const createOrder = async (user, shippAddress) => {
       address.user = user;
       await address.save();
 
-      user.address.push(address);
+      user.address.push(JSON.stringify(address));
       await user.save();
     }
     const cart = await cartService.findUserCart(user._id);

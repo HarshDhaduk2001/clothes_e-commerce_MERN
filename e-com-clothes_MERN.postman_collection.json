@@ -1,0 +1,550 @@
+{
+	"info": {
+		"_postman_id": "f23f4c2f-eb13-40cd-b01c-b34b3c2d5eca",
+		"name": "e-com-clothes_MERN",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "27078873"
+	},
+	"item": [
+		{
+			"name": "auth",
+			"item": [
+				{
+					"name": "signup",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"firstName\":\"Admin\",\r\n    \"lastName\":\"user1\",\r\n    \"email\":\"adminuser1@yopmail.com\",\r\n    \"password\":\"Admin@User1\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{api}}/auth/signup",
+							"host": [
+								"{{api}}"
+							],
+							"path": [
+								"auth",
+								"signup"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "signin",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"email\":\"adminuser1@yopmail.com\",\r\n    \"password\":\"Admin@User1\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{api}}/auth/signin",
+							"host": [
+								"{{api}}"
+							],
+							"path": [
+								"auth",
+								"signin"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "users",
+			"item": [
+				{
+					"name": "getProgile",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{api}}/api/users/profile",
+							"host": [
+								"{{api}}"
+							],
+							"path": [
+								"api",
+								"users",
+								"profile"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "getAllUsers",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{api}}/api/users/",
+							"host": [
+								"{{api}}"
+							],
+							"path": [
+								"api",
+								"users",
+								""
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "adminProducts",
+			"item": [
+				{
+					"name": "addProduct",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"imageUrl\": \"https://rukminim1.flixcart.com/image/612/612/xif0q/shirt/f/z/l/m-white-formal-youthfirst-original-imagqjdfgwjfwgsb.jpeg?q=70\",\r\n    \"brand\": \"youth first\",\r\n    \"title\": \"Men Regular Fit Solid Curved Collar Formal Shirt\",\r\n    \"color\": \"white\",\r\n    \"discountedPrice\": 299,\r\n    \"price\": 699,\r\n    \"discountPersent\": 66,\r\n    \"size\": [\r\n        {\r\n            \"name\": \"S\",\r\n            \"quantity\": 20\r\n        },\r\n        {\r\n            \"name\": \"M\",\r\n            \"quantity\": 30\r\n        },\r\n        {\r\n            \"name\": \"L\",\r\n            \"quantity\": 50\r\n        }\r\n    ],\r\n    \"quantity\": 100,\r\n    \"topLavelCategory\": \"Men\",\r\n    \"secondLavelCategory\": \"Clothing\",\r\n    \"thirdLavelCategory\": \"shirt\",\r\n    \"description\": \"A traditional garment embodying elegance and grace. Crafted from fine fabrics, it features intricate embroidery and a relaxed fit, providing comfort and style.\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{api}}/api/admin/products",
+							"host": [
+								"{{api}}"
+							],
+							"path": [
+								"api",
+								"admin",
+								"products"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "addMultipleProducts",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "[\r\n    {\r\n        \"imageUrl\": \"https://rukminim1.flixcart.com/image/612/612/xif0q/shirt/f/z/l/m-white-formal-youthfirst-original-imagqjdfgwjfwgsb.jpeg?q=70\",\r\n        \"brand\": \"youth first\",\r\n        \"title\": \"Men Regular Fit Solid Curved Collar Formal Shirt\",\r\n        \"color\": \"white\",\r\n        \"discountedPrice\": 299,\r\n        \"price\": 899,\r\n        \"discountPersent\": 66,\r\n        \"size\": [\r\n            {\r\n                \"name\": \"S\",\r\n                \"quantity\": 20\r\n            },\r\n            {\r\n                \"name\": \"M\",\r\n                \"quantity\": 30\r\n            },\r\n            {\r\n                \"name\": \"L\",\r\n                \"quantity\": 50\r\n            }\r\n        ],\r\n        \"quantity\": 100,\r\n        \"topLavelCategory\": \"Men\",\r\n        \"secondLavelCategory\": \"Clothing\",\r\n        \"thirdLavelCategory\": \"shirt\",\r\n        \"description\": \"A traditional garment embodying elegance and grace. Crafted from fine fabrics, it features intricate embroidery and a relaxed fit, providing comfort and style.\"\r\n    },\r\n    {\r\n        \"imageUrl\": \"https://rukminim1.flixcart.com/image/612/612/xif0q/shirt/i/a/z/4xl-white-vtexx-original-imagnzecssjs3y9g.jpeg?q=70\",\r\n        \"brand\": \"VTEXX\",\r\n        \"title\": \"Men Regular Fit Solid Cut Away Collar Formal Shirt\",\r\n        \"color\": \"white\",\r\n        \"discountedPrice\": 299,\r\n        \"price\": 1299,\r\n        \"discountPersent\": 76,\r\n        \"size\": [\r\n            {\r\n                \"name\": \"S\",\r\n                \"quantity\": 20\r\n            },\r\n            {\r\n                \"name\": \"M\",\r\n                \"quantity\": 30\r\n            },\r\n            {\r\n                \"name\": \"L\",\r\n                \"quantity\": 50\r\n            }\r\n        ],\r\n        \"quantity\": 100,\r\n        \"topLavelCategory\": \"Men\",\r\n        \"secondLavelCategory\": \"Clothing\",\r\n        \"thirdLavelCategory\": \"shirt\",\r\n        \"description\": \"A traditional garment embodying elegance and grace. Crafted from fine fabrics, it features intricate embroidery and a relaxed fit, providing comfort and style.\"\r\n    }\r\n]",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{api}}/api/admin/products/creates",
+							"host": [
+								"{{api}}"
+							],
+							"path": [
+								"api",
+								"admin",
+								"products",
+								"creates"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "updateProduct",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"imageUrl\": \"https://rukminim1.flixcart.com/image/612/612/xif0q/shirt/f/z/l/m-white-formal-youthfirst-original-imagqjdfgwjfwgsb.jpeg?q=70\",\r\n    \"brand\": \"youth first\",\r\n    \"title\": \"Men Regular Fit Solid Curved Collar Formal Shirt\",\r\n    \"color\": \"white\",\r\n    \"discountedPrice\": 299,\r\n    \"price\": 899,\r\n    \"discountPersent\": 66,\r\n    \"size\": [\r\n        {\r\n            \"name\": \"S\",\r\n            \"quantity\": 20\r\n        },\r\n        {\r\n            \"name\": \"M\",\r\n            \"quantity\": 30\r\n        },\r\n        {\r\n            \"name\": \"L\",\r\n            \"quantity\": 50\r\n        }\r\n    ],\r\n    \"quantity\": 200,\r\n    \"topLavelCategory\": \"Men\",\r\n    \"secondLavelCategory\": \"Clothing\",\r\n    \"thirdLavelCategory\": \"shirt\",\r\n    \"description\": \"A traditional garment embodying elegance and grace. Crafted from fine fabrics, it features intricate embroidery and a relaxed fit, providing comfort and style.\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{api}}/api/admin/products/652ebea57c6733ba8dede458",
+							"host": [
+								"{{api}}"
+							],
+							"path": [
+								"api",
+								"admin",
+								"products",
+								"652ebea57c6733ba8dede458"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "deleteProduct",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{api}}/api/admin/products/652ebec57c6733ba8dede463",
+							"host": [
+								"{{api}}"
+							],
+							"path": [
+								"api",
+								"admin",
+								"products",
+								"652ebec57c6733ba8dede463"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "cart",
+			"item": [
+				{
+					"name": "getCart",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{api}}/api/cart/",
+							"host": [
+								"{{api}}"
+							],
+							"path": [
+								"api",
+								"cart",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "addProductToCart",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"productId\": \"652ebea57c6733ba8dede458\",\r\n    \"size\": \"m\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{api}}/api/cart/add",
+							"host": [
+								"{{api}}"
+							],
+							"path": [
+								"api",
+								"cart",
+								"add"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "removeItemFromCart",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{api}}/api/cart_items/652ec1f1e8186082eb199a8b",
+							"host": [
+								"{{api}}"
+							],
+							"path": [
+								"api",
+								"cart_items",
+								"652ec1f1e8186082eb199a8b"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "updateCartItem",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"quantity\": 5\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{api}}/api/cart_items/652ec2c2e8186082eb199aa5",
+							"host": [
+								"{{api}}"
+							],
+							"path": [
+								"api",
+								"cart_items",
+								"652ec2c2e8186082eb199aa5"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "orders",
+			"item": [
+				{
+					"name": "createOrder",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"firstName\": \"Admin\",\r\n    \"lastName\": \"User1\",\r\n    \"streetAddress\": \"Ahmadabad\",\r\n    \"city\": \"Ahmadabad\",\r\n    \"state\":\"gujrat\",\r\n    \"zipCode\":\"125435\",\r\n    \"mobile\":\"1258654562\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{api}}/api/orders/",
+							"host": [
+								"{{api}}"
+							],
+							"path": [
+								"api",
+								"orders",
+								""
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "products",
+			"item": [
+				{
+					"name": "getById",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{api}}/api/products/id/652ec76183868cad38878ef2",
+							"host": [
+								"{{api}}"
+							],
+							"path": [
+								"api",
+								"products",
+								"id",
+								"652ec76183868cad38878ef2"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "getAllProducts",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{api}}/api/products?category=shirt&color=red",
+							"host": [
+								"{{api}}"
+							],
+							"path": [
+								"api",
+								"products"
+							],
+							"query": [
+								{
+									"key": "category",
+									"value": "shirt"
+								},
+								{
+									"key": "color",
+									"value": "red"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	]
+}

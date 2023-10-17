@@ -43,11 +43,11 @@ const createProduct = async (reqData) => {
       color: reqData.color,
       description: reqData.description,
       discountedPrice: reqData.discountedPrice,
-      discountPresent: reqData.discountPresent,
+      discountPresent: reqData.discountPersent,
       imageUrl: reqData.imageUrl,
       brand: reqData.brand,
       price: reqData.price,
-      sizes: reqData.sizes,
+      sizes: reqData.size,
       quantity: reqData.quantity,
       category: thirdLevel._id,
     });
