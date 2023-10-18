@@ -1,9 +1,21 @@
 import { Button, Grid, TextField } from "@mui/material";
-import React from "react";
+import React, { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
+import { getUserProfile, login } from "../../Redux/Auth/Action";
+import { useDispatch, useSelector } from "react-redux";
 
 const LoginForm = () => {
     const navigate = useNavigate();
+    const dispatch = useDispatch();
+    const token = localStorage.getItem("token");
+    const { auth } = useSelector((store) => store);
+  
+    useEffect(() => {
+      if (token) {
+        dispatch(getUserProfile());
+      }
+    }, [token, auth.token]);
+
   const handleSubmit = (e) => {
     e.preventDefault();
 
@@ -13,7 +25,7 @@ const LoginForm = () => {
       password: data.get("password"),
     };
 
-    console.log(userData);
+    dispatch(login(userData))
   };
   return (
     <div>

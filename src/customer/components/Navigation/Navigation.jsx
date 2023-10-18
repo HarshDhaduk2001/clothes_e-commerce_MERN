@@ -1,7 +1,7 @@
 /* eslint-disable jsx-a11y/anchor-is-valid */
 /* eslint-disable no-unused-vars */
 /* eslint-disable jsx-a11y/no-redundant-roles */
-import { Fragment, useState } from "react";
+import { Fragment, useEffect, useState } from "react";
 import { Dialog, Popover, Tab, Transition } from "@headlessui/react";
 import {
   Bars3Icon,
@@ -12,8 +12,10 @@ import {
 import { Avatar, Button, Menu, MenuItem } from "@mui/material";
 import { deepPurple } from "@mui/material/colors";
 import navigation from "../../Data/navigation";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import AuthModal from "../../Auth/AuthModal";
+import { useDispatch, useSelector } from "react-redux";
+import { getUserProfile, logout } from "../../../Redux/Auth/Action";
 
 function classNames(...classes) {
   return classes.filter(Boolean).join(" ");
@@ -21,11 +23,15 @@ function classNames(...classes) {
 
 export default function Navigation() {
   const navigate = useNavigate();
+  const { auth } = useSelector((state) => state);
+  const dispatch = useDispatch();
+  const location = useLocation();
+  let token = localStorage.getItem("token");
+
   const [open, setOpen] = useState(false);
   const [openAuthModel, setOpenAuthModel] = useState(false);
   const [anchorEl, setAnchorEl] = useState(null);
   const openUserMenu = Boolean(anchorEl);
-  const jwt = localStorage.getItem("jwt");
 
   const handleUserClick = (event) => {
     setAnchorEl(event.currentTarget);
@@ -36,11 +42,34 @@ export default function Navigation() {
   };
 
   const handleOpen = () => setOpenAuthModel(true);
-  const handleClose = () => setOpenAuthModel(false);
+  const handleClose = () => {
+    setOpenAuthModel(false);
+  };
 
   const handleCategoryClick = (category, section, item, close) => {
     navigate(`${category.id}/${section.id}/${item.id}`);
     close();
+  };
+
+  useEffect(() => {
+    if (auth.token) {
+      dispatch(getUserProfile(auth.token));
+    }
+    if (location.pathname === "/login" || location.pathname === "/register") {
+      navigate("/");
+    }
+  }, [token, auth.token]);
+
+  useEffect(() => {
+    if (auth.user) {
+      handleClose();
+    }
+  }, [auth.user]);
+
+  const handleLogout = () => {
+    handleCloseUserMenu();
+    dispatch(logout());
+    localStorage.clear();
   };
 
   return (
@@ -385,7 +414,7 @@ export default function Navigation() {
 
               <div className="ml-auto flex items-center">
                 <div className="hidden lg:flex lg:flex-1 lg:items-center lg:justify-end lg:space-x-6">
-                  {false ? (
+                  {auth.user?.firstName ? (
                     <div>
                       <Avatar
                         className="text-white"
@@ -399,7 +428,7 @@ export default function Navigation() {
                           cursor: "pointer",
                         }}
                       >
-                        H
+                        {auth.user.firstName[0].toUpperCase()}
                       </Avatar>
                       <Menu
                         id="basic-menu"
@@ -411,8 +440,15 @@ export default function Navigation() {
                         <MenuItem onClick={handleCloseUserMenu}>
                           Profile
                         </MenuItem>
-                        <MenuItem onClick={() => navigate("/account/order")}>My Orders</MenuItem>
-                        <MenuItem>Logout</MenuItem>
+                        <MenuItem
+                          onClick={() => {
+                            handleCloseUserMenu();
+                            navigate("/account/order");
+                          }}
+                        >
+                          My Orders
+                        </MenuItem>
+                        <MenuItem onClick={handleLogout}>Logout</MenuItem>
                       </Menu>
                     </div>
                   ) : (
