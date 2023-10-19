@@ -1,15 +1,15 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { RadioGroup } from "@headlessui/react";
 import { Box, Button, Grid, LinearProgress, Rating } from "@mui/material";
 import ProductReviewCard from "./ProductReviewCard";
 import HomeSectionCard from "../Home/HomeSectionCard";
 import mens_kurta from "../../Data/Men/men_kurta";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import { findProductById } from "../../../Redux/Product/Action";
+import { addItemToCart } from "../../../Redux/Cart/Action";
 
 const product = {
-  name: "Basic Tee 6-Pack",
-  price: "$192",
-  href: "#",
   breadcrumbs: [
     { id: 1, name: "Men", href: "#" },
     { id: 2, name: "Clothing", href: "#" },
@@ -61,7 +61,21 @@ function classNames(...classes) {
 
 export default function ProductDetails() {
   const navigate = useNavigate();
-  const [selectedSize, setSelectedSize] = useState(product.sizes[2]);
+  const params = useParams();
+  const dispatch = useDispatch();
+  const { products } = useSelector((store) => store);
+
+  const [selectedSize, setSelectedSize] = useState("");
+
+  useEffect(() => {
+    dispatch(findProductById(params.productId));
+  }, [params.productId]);
+
+  const handleAddToCart = () => {
+    const data = { productId: params.productId, size: selectedSize.name };
+    dispatch(addItemToCart(data));
+    navigate("/cart");
+  };
 
   return (
     <div className="bg-white lg:px-20">
@@ -110,7 +124,7 @@ export default function ProductDetails() {
           <div className="flex flex-col items-center">
             <div className="overflow-hidden rounded-lg max-w-[30rem] max-h-[35rem]">
               <img
-                src={product.images[0].src}
+                src={products.product?.product.imageUrl}
                 alt={product.images[0].alt}
                 className="h-full w-full object-cover object-center"
               />
@@ -132,20 +146,26 @@ export default function ProductDetails() {
           <div className="lg:col-span-1 max-h-auto max-w-2xl px-4 pb-16 sm:px-6 lg:max-w-7xl lg:px-8 lg:pb-24">
             <div className="lg:col-span-2">
               <h1 className="text-lg lg:text-xl font-semibold text-gray-900">
-                Brand name
+                {products.product?.product.brand}
               </h1>
               <h1 className="text-lg lg:text-xl text-gray-900 opacity-60 pt-1">
-                this is title
+                {products.product?.product.title}
               </h1>
             </div>
 
             {/* Options */}
             <div className="mt-4 lg:row-span-3 lg:mt-0">
-              <h2 className="sr-only">Product information</h2>
+              <h2 className="sr-only">Product Information</h2>
               <div className="flex space-x-5 items-center text-lg lg:text-xl text-gray-900 mt-6">
-                <p className="font-semibold">199</p>
-                <p className="line-through opacity-50">399</p>
-                <p className="text-green-600">5% off</p>
+                <p className="font-semibold">
+                  {products.product?.product.discountedPrice}
+                </p>
+                <p className="line-through opacity-50">
+                  {products.product?.product.price}
+                </p>
+                <p className="text-green-600">
+                  {products.product?.product.discountPresent}% off
+                </p>
               </div>
 
               {/* Reviews */}
@@ -180,14 +200,14 @@ export default function ProductDetails() {
                       Choose a size
                     </RadioGroup.Label>
                     <div className="grid grid-cols-4 gap-4 sm:grid-cols-8 lg:grid-cols-4">
-                      {product.sizes.map((size) => (
+                      {products.product?.product.sizes.map((size) => (
                         <RadioGroup.Option
                           key={size.name}
                           value={size}
-                          disabled={!size.inStock}
+                          disabled={size.quantity === 0}
                           className={({ active }) =>
                             classNames(
-                              size.inStock
+                              size.quantity > 0
                                 ? "cursor-pointer bg-white text-gray-900 shadow-sm"
                                 : "cursor-not-allowed bg-gray-50 text-gray-200",
                               active ? "ring-2 ring-indigo-500" : "",
@@ -200,7 +220,7 @@ export default function ProductDetails() {
                               <RadioGroup.Label as="span">
                                 {size.name}
                               </RadioGroup.Label>
-                              {size.inStock ? (
+                              {size.quantity > 0 ? (
                                 <span
                                   className={classNames(
                                     active ? "border" : "border-2",
@@ -243,7 +263,7 @@ export default function ProductDetails() {
                 <Button
                   variant="contained"
                   sx={{ px: "2rem", py: "1rem", mt: 3 }}
-                  onClick={() => navigate("/cart")}
+                  onClick={handleAddToCart}
                 >
                   Add to Cart
                 </Button>
@@ -301,7 +321,7 @@ export default function ProductDetails() {
                   ))}
                 </div>
               </Grid>
-              <Grid irem xs={5}>
+              <Grid irem xs={5} className="mt-12">
                 <h1 className="text-xl font-semibold pb-1 mt-2">
                   Product Ratings
                 </h1>

@@ -1,6 +1,11 @@
-import React from "react";
+import React, { useEffect } from "react";
+import { useDispatch } from "react-redux";
 
 const AddressCard = () => {
+  const dispatch = useDispatch();
+  
+  useEffect(() => {},[])
+  
   return (
     <div>
       <div className="space-y-3">

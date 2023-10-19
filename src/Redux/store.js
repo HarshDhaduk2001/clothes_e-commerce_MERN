@@ -11,7 +11,7 @@ const { default: thunk } = require("redux-thunk");
 
 const rootReducers = combineReducers({
   auth: authReducer,
-  product: customerProductReducer,
+  products: customerProductReducer,
   cart: cartReducer,
   order: orderReducer,
 });
