@@ -113,12 +113,13 @@ const getAllProducts = async (reqQuery) => {
     pageSize = pageSize || 10;
 
     let query = Product.find().populate("category");
+
     if (category) {
       const existCategory = await Category.findOne({ name: category });
       if (existCategory) {
         query = query.where("category").equals(existCategory._id);
       } else {
-        return { content: [], curentPage: 1, totalPages: 0 };
+        return { content: [], currentPage: 1, totalPages: 0 };
       }
     }
 
@@ -136,25 +137,25 @@ const getAllProducts = async (reqQuery) => {
       query = query.where("sizes.name").in([...sizesSet]);
     }
 
-    if (minPrice && maxPrice) {
-      query = query.where("discountedPrice").get(minPrice).lte(maxPrice);
+    if (minPrice !== undefined && maxPrice !== undefined) {
+      query = query.where("discountedPrice").gte(minPrice).lte(maxPrice);
     }
 
-    if (minDiscount) {
-      query = query.where("discountPercent").get(minDiscount);
+    if (minDiscount !== undefined && minDiscount !== null) {
+      query = query.where("discountPresent").gte(minDiscount);
     }
 
     if (stock) {
-      if (stock == "in_stock") {
-        query = (await query.where("quantity")).get(0);
-      } else if (stock == "out_of_stock") {
-        query = (await query.where("quantity")).get(1);
+      if (stock === "in_stock") {
+        query = query.where("quantity").gt(0);
+      } else if (stock === "out_of_stock") {
+        query = query.where("quantity").eq(0);
       }
     }
 
     if (sort) {
       const sortDirection = sort === "price_high" ? -1 : 1;
-      query = quere.sort({ discountedPrice: sortDirection });
+      query = query.sort({ discountedPrice: sortDirection });
     }
 
     const totalProducts = await Product.countDocuments(query);
@@ -174,7 +175,7 @@ const getAllProducts = async (reqQuery) => {
 
 const createMultipleProduct = async (products) => {
   try {
-    for(let product of products){
+    for (let product of products) {
       await createProduct(product);
     }
   } catch (error) {

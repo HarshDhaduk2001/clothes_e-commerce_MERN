@@ -14,7 +14,7 @@ const updateCartItem = async (userId, cartItemId, cartItemData) => {
     }
 
     if (user._id.toString() === userId.toString()) {
-      item.quantity = cartItemData.quantity;
+      item.quantity = cartItemData.data.quantity;
       item.price = item.quantity * item.product.price;
       item.discountedPrice = item.quantity * item.product.discountedPrice;
       const updatedCartItem = await item.save();
